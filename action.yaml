@@ -3,20 +3,24 @@ description: Reports job results to Slack via a Slack bot.
 inputs:
   channel-id:
     required: true
-  job-name:
+  title:
     required: true
   job-status:
-    required: true
 runs:
   using: "composite"
   steps:
-    - name: Set Slack Color for Job Result
+    - name: Set Slack Color for Job Status
+      if: ${{ inputs.job-status != '' }}
       uses: haya14busa/action-cond@v1.0.0
       id: slack-color
       with:
         cond: ${{ inputs.job-status == 'success' }}
         if_true: "#36a64f"
         if_false: "#c91616"
+    - name: Set Status Link for Job Status
+      if: ${{ inputs.job-status != '' }}
+      env:
+        BUILD_URL: "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ inputs.job-status }}>"
     - name: Slack Notify
       if: always()
       uses: slackapi/slack-github-action@v1.19.0
@@ -32,7 +36,7 @@ runs:
                     "type": "header",
                     "text": {
                       "type": "plain_text",
-                      "text": "GitHub Actions Build Result",
+                      "text": ${{ inputs.title }},
                       "emoji": true
                     }
                   },
@@ -40,14 +44,14 @@ runs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "${{ github.event.repository.name }} ${{ github.ref_name }} ${{ inputs.job-name }}"
+                      "text": Repo: "${{ github.event.repository.name }} Branch: ${{ github.ref_name }}"
                     }
                   },
                   {
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ inputs.job-status }}>"
+                      "text": "${{ env.BUILD_URL }}"
                     }
                   }
                 ]

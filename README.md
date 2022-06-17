@@ -6,7 +6,10 @@ Output is a simple message with a color bar representing the status, and a link 
 ### Required Inputs
 
 `channel-id`
-`job-name`
+`title`
+
+### Optional inputs
+
 `job-status`
 
 ### Required Secrets
