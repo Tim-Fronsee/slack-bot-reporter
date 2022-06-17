@@ -1,0 +1,58 @@
+name: Slack Bot Reporter
+description: Reports job results to Slack via a Slack bot.
+inputs:
+  channel-id:
+    required: true
+  job-name:
+    required: true
+  job-result:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Set Slack Color for Job Result
+      uses: haya14busa/action-cond@v1.0.0
+      id: slack-color
+      with:
+        cond: ${{ env.LAST_JOB_STATUS == 'success' }}
+        if_true: "#36a64f"
+        if_false: "#c91616"
+    - name: Slack Notify
+      if: always()
+      uses: slackapi/slack-github-action@v1.19.0
+      with:
+        channel-id: ${{ channel-id }}
+        payload: |
+          {
+            "attachments": [
+              {
+                "color": "${{ steps.slack-color.outputs.value }}",
+                "blocks": [
+                  {
+                    "type": "header",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "GitHub Actions Build Result",
+                      "emoji": true
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "${{ github.event.repository.name }} ${{ github.ref_name }} ${{ env.LAST_JOB_NAME }}"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ env.LAST_JOB_STATUS }}>"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
