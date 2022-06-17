@@ -5,7 +5,7 @@ inputs:
     required: true
   job-name:
     required: true
-  job-result:
+  job-status:
     required: true
 runs:
   using: "composite"
@@ -55,4 +55,4 @@ runs:
             ]
           }
       env:
-        SLACK_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
