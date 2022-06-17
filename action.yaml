@@ -20,8 +20,7 @@ runs:
         if_false: "#c91616"
     - name: Set Status Link for Job Status
       if: ${{ inputs.job-status != '' }}
-      env:
-        BUILD_URL: "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ inputs.job-status }}>"
+      run: echo "BUILD_URL=<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ inputs.job-status }}>" >> $GITHUB_ENV
     - name: Slack Notify
       if: always()
       uses: slackapi/slack-github-action@v1.19.0
