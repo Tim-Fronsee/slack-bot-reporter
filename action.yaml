@@ -14,14 +14,14 @@ runs:
       uses: haya14busa/action-cond@v1.0.0
       id: slack-color
       with:
-        cond: ${{ env.LAST_JOB_STATUS == 'success' }}
+        cond: ${{ inputs.job-status == 'success' }}
         if_true: "#36a64f"
         if_false: "#c91616"
     - name: Slack Notify
       if: always()
       uses: slackapi/slack-github-action@v1.19.0
       with:
-        channel-id: ${{ channel-id }}
+        channel-id: ${{ inputs.channel-id }}
         payload: |
           {
             "attachments": [
@@ -40,14 +40,14 @@ runs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "${{ github.event.repository.name }} ${{ github.ref_name }} ${{ env.LAST_JOB_NAME }}"
+                      "text": "${{ github.event.repository.name }} ${{ github.ref_name }} ${{ inputs.job-name }}"
                     }
                   },
                   {
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ env.LAST_JOB_STATUS }}>"
+                      "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ inputs.job-status }}>"
                     }
                   }
                 ]
@@ -55,4 +55,4 @@ runs:
             ]
           }
       env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        SLACK_BOT_TOKEN: ${{ env.SLACK_BOT_TOKEN }}
