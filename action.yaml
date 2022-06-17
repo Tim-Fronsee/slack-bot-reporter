@@ -37,7 +37,7 @@ runs:
                     "type": "header",
                     "text": {
                       "type": "plain_text",
-                      "text": ${{ inputs.title }},
+                      "text": "${{ inputs.title }}",
                       "emoji": true
                     }
                   },
@@ -45,14 +45,7 @@ runs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": Repo: "${{ github.event.repository.name }} Branch: ${{ github.ref_name }}"
-                    }
-                  },
-                  {
-                    "type": "section",
-                    "text": {
-                      "type": "mrkdwn",
-                      "text": "${{ env.BUILD_URL }}"
+                      "text": "Repo: ${{ github.event.repository.name }}\nBranch: ${{ github.ref_name }}\n${{ env.BUILD_URL }}"
                     }
                   }
                 ]
