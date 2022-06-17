@@ -19,6 +19,7 @@ runs:
         if_true: "#36a64f"
         if_false: "#c91616"
     - name: Set Status Link for Job Status
+      shell: cmd
       if: ${{ inputs.job-status != '' }}
       run: echo "BUILD_URL=<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ inputs.job-status }}>" >> $GITHUB_ENV
     - name: Slack Notify
