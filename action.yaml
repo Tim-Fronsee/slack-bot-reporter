@@ -6,6 +6,7 @@ inputs:
   title:
     required: true
   job-status:
+    required: false
 runs:
   using: "composite"
   steps:
