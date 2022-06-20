@@ -1,0 +1,32 @@
+name: Test action
+on: push
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    tags:
+      - 'v**'
+jobs:
+  Checkout:
+    runs-on: self-hosted
+    name: Checkout
+  Test:
+    runs-on: self-hosted
+    steps:
+      - name: Slack Report Without Status
+        uses: action.yaml
+        with:
+          channel-id: 'build-server'
+          title: Testing Slack Bot Reporter Without Status
+      - name: Slack Report With Failure
+          uses: action.yaml
+        with:
+          channel-id: 'build-server'
+          title: Testing Slack Bot Reporter With Failure
+          job-status: failure
+      - name: Slack Report With Success
+          uses: action.yaml
+        with:
+          channel-id: 'build-server'
+          title: Testing Slack Bot Reporter With Success
+          job-status: success
