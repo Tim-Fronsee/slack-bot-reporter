@@ -18,12 +18,6 @@ runs:
         cond: ${{ inputs.job-status == 'success' }}
         if_true: "#36a64f"
         if_false: "#c91616"
-    - name: Set Status Link for Job Status
-      shell: cmd
-      if: ${{ inputs.job-status != '' }}
-      run: echo Setting Build URL
-      env:
-        BUILD_URL: "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ inputs.job-status }}>"
     - name: Slack Notify
       if: always()
       uses: slackapi/slack-github-action@v1.19.0
@@ -47,7 +41,7 @@ runs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "Repo: ${{ github.event.repository.name }}\nBranch: ${{ github.ref_name }}\n${{ env.BUILD_URL }}"
+                      "text": "Repo: ${{ github.event.repository.name }}\nBranch: ${{ github.ref_name }}\n${{ inputs.job-status }} <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Log>"
                     }
                   }
                 ]
