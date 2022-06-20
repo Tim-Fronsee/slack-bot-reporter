@@ -8,28 +8,28 @@ on:
       - 'v**'
 jobs:
   Checkout:
-    runs-on: windows-latest
+    runs-on: self-hosted
     name: Checkout
     steps:
       - name: Checkout
         uses: actions/checkout@v2.4.2
   Test:
-    runs-on: windows-latest
+    runs-on: self-hosted
     needs: Checkout
     steps:
       - name: Slack Report Without Status
-        uses: './../action.yaml'
+        uses: './slack-bot-reporter/action.yaml'
         with:
           channel-id: 'build-server'
           title: Testing Slack Bot Reporter Without Status
       - name: Slack Report With Failure
-        uses: './../action.yaml'
+        uses: './slack-bot-reporter/action.yaml'
         with:
           channel-id: 'build-server'
           title: Testing Slack Bot Reporter With Failure
           job-status: failure
       - name: Slack Report With Success
-        uses: './../action.yaml'
+        uses: './slack-bot-reporter/action.yaml'
         with:
           channel-id: 'build-server'
           title: Testing Slack Bot Reporter With Success
