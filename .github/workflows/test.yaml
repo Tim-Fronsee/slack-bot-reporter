@@ -18,18 +18,18 @@ jobs:
     needs: Checkout
     steps:
       - name: Slack Report Without Status
-        uses: Tim-Fronsee/slack-bot-reporter@${{ github.ref_name }}
+        uses: './../action.yaml'
         with:
           channel-id: 'build-server'
           title: Testing Slack Bot Reporter Without Status
       - name: Slack Report With Failure
-        uses: Tim-Fronsee/slack-bot-reporter@${{ github.ref_name }}
+        uses: './../action.yaml'
         with:
           channel-id: 'build-server'
           title: Testing Slack Bot Reporter With Failure
           job-status: failure
       - name: Slack Report With Success
-        uses: Tim-Fronsee/slack-bot-reporter@${{ github.ref_name }}
+        uses: './../action.yaml'
         with:
           channel-id: 'build-server'
           title: Testing Slack Bot Reporter With Success
