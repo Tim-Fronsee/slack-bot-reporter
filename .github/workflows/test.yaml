@@ -10,6 +10,9 @@ jobs:
   Checkout:
     runs-on: self-hosted
     name: Checkout
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.2
   Test:
     runs-on: self-hosted
     steps:
