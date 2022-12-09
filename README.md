@@ -20,6 +20,6 @@ Output is a simple message with a color bar representing the status, and a link 
 
 ### GitHub Actions Dependencies
 
-[haya14busa/action-cond@v1.0.0](https://github.com/haya14busa/action-cond)
+[haya14busa/action-cond@v1.1.1](https://github.com/haya14busa/action-cond)
 
-[slackapi/slack-github-action@v1.19.0](https://github.com/slackapi/slack-github-action)
+[slackapi/slack-github-action@v1.23.0](https://github.com/slackapi/slack-github-action)

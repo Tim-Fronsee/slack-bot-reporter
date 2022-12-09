@@ -12,7 +12,7 @@ runs:
   steps:
     - name: Set Slack Color for Job Status
       if: ${{ inputs.job-status != '' }}
-      uses: haya14busa/action-cond@v1.0.0
+      uses: haya14busa/action-cond@v1.1.1
       id: slack-color
       with:
         cond: ${{ inputs.job-status == 'success' }}
