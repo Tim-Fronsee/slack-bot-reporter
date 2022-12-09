@@ -20,7 +20,7 @@ runs:
         if_false: "#c91616"
     - name: Slack Notify
       if: always()
-      uses: slackapi/slack-github-action@v1.19.0
+      uses: slackapi/slack-github-action@v1.23.0
       with:
         channel-id: ${{ inputs.channel-id }}
         payload: |
